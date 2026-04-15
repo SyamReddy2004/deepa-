@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AgroMind AI - Intelligent Farming Assistant for Indian Farmers" />
+    <meta name="theme-color" content="#1D9E75" />
+    <title>AgroMind AI 🌾</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --color-background-primary: #ffffff;
+        --color-background-secondary: #f5f4ef;
+        --color-background-tertiary: #edecea;
+        --color-background-success: #eaf3de;
+        --color-background-warning: #faeeda;
+        --color-background-danger: #fcebeb;
+        --color-background-info: #e6f1fb;
+        --color-text-primary: #1a1a18;
+        --color-text-secondary: #5f5e5a;
+        --color-text-tertiary: #888780;
+        --color-text-success: #3b6d11;
+        --color-text-warning: #854f0b;
+        --color-text-danger: #a32d2d;
+        --color-text-info: #185fa5;
+        --color-border-tertiary: rgba(0,0,0,0.12);
+        --color-border-secondary: rgba(0,0,0,0.22);
+        --color-border-primary: rgba(0,0,0,0.35);
+        --color-border-success: #639922;
+        --color-border-warning: #ba7517;
+        --color-border-danger: #e24b4a;
+        --color-border-info: #378add;
+        --font-sans: system-ui, -apple-system, sans-serif;
+        --font-mono: 'Courier New', monospace;
+        --border-radius-md: 8px;
+        --border-radius-lg: 12px;
+        --border-radius-xl: 16px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-background-primary: #1e1e1c;
+          --color-background-secondary: #2a2a27;
+          --color-background-tertiary: #333330;
+          --color-background-success: #173404;
+          --color-background-warning: #412402;
+          --color-background-danger: #501313;
+          --color-background-info: #042c53;
+          --color-text-primary: #e8e6dc;
+          --color-text-secondary: #b4b2a9;
+          --color-text-tertiary: #888780;
+          --color-text-success: #c0dd97;
+          --color-text-warning: #fac775;
+          --color-text-danger: #f09595;
+          --color-text-info: #b5d4f4;
+          --color-border-tertiary: rgba(255,255,255,0.12);
+          --color-border-secondary: rgba(255,255,255,0.22);
+          --color-border-primary: rgba(255,255,255,0.35);
+          --color-border-success: #3b6d11;
+          --color-border-warning: #854f0b;
+          --color-border-danger: #a32d2d;
+          --color-border-info: #185fa5;
+        }
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-background-tertiary);
+        color: var(--color-text-primary);
+        min-height: 100vh;
+        padding: 0 16px 32px;
+      }
+      input, select, textarea, button {
+        font-family: var(--font-sans);
+      }
+      input[type="range"] {
+        accent-color: #1D9E75;
+        width: 100%;
+      }
+      ::-webkit-scrollbar { width: 4px; height: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -5,26 +5,51 @@ export default async function handler(req, res) {
   }
 
   // Require API key
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured in environment variables." });
+    return res.status(500).json({ error: "GEMINI_API_KEY not configured in environment variables." });
   }
 
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify(req.body),
-    });
+    const { system, messages } = req.body;
+
+    // Convert messages to Gemini format
+    const contents = messages.map((msg) => ({
+      role: msg.role === "assistant" ? "model" : "user",
+      parts: [{ text: msg.content }],
+    }));
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: system ? { parts: [{ text: system }] } : undefined,
+          contents,
+          generationConfig: {
+            maxOutputTokens: 1000,
+            temperature: 0.7,
+          },
+        }),
+      }
+    );
 
     const data = await response.json();
-    return res.status(response.status).json(data);
+
+    if (data.error) {
+      return res.status(response.status).json({ error: data.error.message });
+    }
+
+    // Extract text from Gemini response
+    const text =
+      data.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") ||
+      "";
+
+    // Return in a consistent format
+    return res.status(200).json({ text });
   } catch (error) {
-    console.error("Anthropic API error:", error);
-    return res.status(500).json({ error: "Failed to reach Anthropic API." });
+    console.error("Gemini API error:", error);
+    return res.status(500).json({ error: "Failed to reach Gemini API." });
   }
 }

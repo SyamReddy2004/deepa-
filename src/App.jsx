@@ -18,20 +18,19 @@ const MODULES = [
   { id: "chat",      icon: "🤖", label: "Chatbot"   },
 ];
 
-// ─── Claude API (proxied via Vercel serverless function) ──────────────────────
+// ─── Gemini API (proxied via Vercel serverless function) ──────────────────────
 async function callClaude(messages, systemPrompt) {
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
       system: systemPrompt,
       messages,
     }),
   });
   const d = await res.json();
-  return d.content?.map(c => c.text || "").join("") || "";
+  if (d.error) throw new Error(d.error);
+  return d.text || "";
 }
 
 function parseJSON(raw) {
@@ -950,7 +949,7 @@ export default function AgroMind() {
       </div>
 
       <div style={{ textAlign: "center", padding: "0.75rem 0", fontSize: 11, color: "var(--color-text-secondary)" }}>
-        AgroMind AI · GPS · Voice · Image Upload · 5 Languages · Claude API
+        AgroMind AI · GPS · Voice · Image Upload · 5 Languages · Gemini AI
       </div>
     </div>
   );
